@@ -1,6 +1,6 @@
 # About Us
 
-Blah blah test!
+Blah blah test! Moreee.
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
