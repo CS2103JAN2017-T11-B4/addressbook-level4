@@ -41,6 +41,7 @@ public class AddCommand extends Command {
         }
         this.toAdd = new Task(
                 new Description(description),
+                null,
                 new UniqueTagList(tagSet)
         );
     }

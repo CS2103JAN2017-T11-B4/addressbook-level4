@@ -2,6 +2,7 @@ package seedu.task.testutil;
 
 import seedu.task.model.tag.UniqueTagList;
 import seedu.task.model.task.Description;
+import seedu.task.model.task.Duration;
 import seedu.task.model.task.ReadOnlyTask;
 
 /**
@@ -10,6 +11,7 @@ import seedu.task.model.task.ReadOnlyTask;
 public class TestTask implements ReadOnlyTask {
 
     private Description description;
+    private Duration duration;
     private UniqueTagList tags;
 
     public TestTask() {
@@ -28,6 +30,11 @@ public class TestTask implements ReadOnlyTask {
         this.description = description;
     }
 
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+
     public void setTags(UniqueTagList tags) {
         this.tags = tags;
     }
@@ -35,6 +42,11 @@ public class TestTask implements ReadOnlyTask {
     @Override
     public Description getDescription() {
         return description;
+    }
+
+    @Override
+    public Duration getDuration() {
+        return duration;
     }
 
     @Override
