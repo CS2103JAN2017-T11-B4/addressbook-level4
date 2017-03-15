@@ -9,6 +9,7 @@ import seedu.task.model.tag.UniqueTagList;
 public interface ReadOnlyTask {
 
     Description getDescription();
+    DueDate getDueDate();
 
     /**
      * The returned TagList is a deep copy of the internal TagList,
@@ -31,7 +32,11 @@ public interface ReadOnlyTask {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getDescription())
-                .append(" Tags: ");
+                .append(" Due: ");
+        if (getDueDate() != null) {
+            builder.append(getDueDate());
+        }
+        builder.append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

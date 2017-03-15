@@ -2,6 +2,7 @@ package seedu.task.testutil;
 
 import seedu.task.model.tag.UniqueTagList;
 import seedu.task.model.task.Description;
+import seedu.task.model.task.DueDate;
 import seedu.task.model.task.ReadOnlyTask;
 
 /**
@@ -11,6 +12,7 @@ public class TestTask implements ReadOnlyTask {
 
     private Description description;
     private UniqueTagList tags;
+    private DueDate dueDate;
 
     public TestTask() {
         tags = new UniqueTagList();
@@ -32,9 +34,18 @@ public class TestTask implements ReadOnlyTask {
         this.tags = tags;
     }
 
+    public void setDueDate(DueDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
     @Override
     public Description getDescription() {
         return description;
+    }
+
+    @Override
+    public DueDate getDueDate() {
+        return this.dueDate;
     }
 
     @Override
@@ -53,4 +64,5 @@ public class TestTask implements ReadOnlyTask {
         this.getTags().asObservableList().stream().forEach(s -> sb.append("t/" + s.tagName + " "));
         return sb.toString();
     }
+
 }
