@@ -2,6 +2,8 @@ package seedu.task.logic.parser;
 
 import static seedu.task.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.task.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.task.logic.parser.CliSyntax.PREFIX_START;
+import static seedu.task.logic.parser.CliSyntax.PREFIX_END;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,10 +29,9 @@ public class EditCommandParser {
     public Command parse(String args) {
         assert args != null;
         ArgumentTokenizer argsTokenizer =
-                new ArgumentTokenizer(PREFIX_TAG);
+                new ArgumentTokenizer(PREFIX_TAG,PREFIX_START,PREFIX_END);
         argsTokenizer.tokenize(args);
         List<Optional<String>> preambleFields = ParserUtil.splitPreamble(argsTokenizer.getPreamble().orElse(""), 2);
-
         Optional<Integer> index = preambleFields.get(0).flatMap(ParserUtil::parseIndex);
         if (!index.isPresent()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
@@ -40,6 +41,9 @@ public class EditCommandParser {
         try {
             editTaskDescriptor.setDescription(ParserUtil.parseDescription(preambleFields.get(1)));
             editTaskDescriptor.setTags(parseTagsForEdit(ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
+            editTaskDescriptor.setStart(argsTokenizer.getAllValues(PREFIX_START));
+            editTaskDescriptor.setEnd(argsTokenizer.getAllValues(PREFIX_END));
+            
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
