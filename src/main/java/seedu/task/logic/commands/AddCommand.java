@@ -8,6 +8,7 @@ import seedu.task.logic.commands.exceptions.CommandException;
 import seedu.task.model.tag.Tag;
 import seedu.task.model.tag.UniqueTagList;
 import seedu.task.model.task.Description;
+import seedu.task.model.task.Duration;
 import seedu.task.model.task.Task;
 import seedu.task.model.task.UniqueTaskList;
 
@@ -19,9 +20,9 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the task list. "
-            + "Parameters: NAME [t/TAG]...\n"
+            + "Parameters: NAME [starts/START ends/END] [t/TAG]...\n"
             + "Example: " + COMMAND_WORD
-            + " Buy milk and eggs t/home t/important";
+            + " Buy milk and eggs starts/2017/01/01 1000 ends/2017/01/01 1200 t/home t/important";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the task list";
@@ -33,15 +34,18 @@ public class AddCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String description, Set<String> tags)
+    public AddCommand(String description, String startDate, String endDate, Set<String> tags)
             throws IllegalValueException {
+        Duration duration = (startDate == "" || endDate == "") ?
+                null :
+                new Duration(startDate, endDate);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(new Tag(tagName));
         }
         this.toAdd = new Task(
                 new Description(description),
-                null,
+                duration,
                 new UniqueTagList(tagSet)
         );
     }
