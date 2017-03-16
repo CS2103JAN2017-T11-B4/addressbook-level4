@@ -11,6 +11,11 @@ import seedu.task.model.task.Description;
 import seedu.task.model.task.ReadOnlyTask;
 import seedu.task.model.task.Task;
 import seedu.task.model.task.UniqueTaskList;
+import java.util.Calendar;
+import java.util.Objects;
+import seedu.task.commons.exceptions.IllegalValueException;
+import seedu.task.model.util.DateParser;
+import seedu.task.model.task.Duration;
 
 /**
  * Edits the details of an existing task in the task list.
@@ -22,8 +27,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
             + "by the index number used in the last task listing. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) [NAME] [t/TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 t/hi-pri";
+            + "Parameters: INDEX (must be a positive integer) [NAME] [t/TAG] [starts/STARTTIME] [ends/ENDTIME]...\n"
+            + "Example: " + COMMAND_WORD + " 1 t/hi-pri starts/2013/06/01 1324 ends/2013/06/01 1324";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -56,7 +61,6 @@ public class EditCommand extends Command {
 
         ReadOnlyTask taskToEdit = lastShownList.get(filteredTaskListIndex);
         Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
-
         try {
             model.updateTask(filteredTaskListIndex, editedTask);
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
@@ -76,7 +80,15 @@ public class EditCommand extends Command {
 
         Description updatedDescription = editTaskDescriptor.getDescription().orElseGet(taskToEdit::getDescription);
         UniqueTagList updatedTags = editTaskDescriptor.getTags().orElseGet(taskToEdit::getTags);
-
+        try{
+        String start = editTaskDescriptor.getStart().get().get(0);
+        String end = editTaskDescriptor.getEnd().get().get(0);
+        Duration duration = new Duration(start,end);
+        return new Task(updatedDescription, null, duration, updatedTags);
+        
+        }catch(Exception e){
+        	System.out.println("Not Set");
+        }
         return new Task(updatedDescription, null, null, updatedTags);
     }
 
@@ -87,19 +99,24 @@ public class EditCommand extends Command {
     public static class EditTaskDescriptor {
         private Optional<Description> description = Optional.empty();
         private Optional<UniqueTagList> tags = Optional.empty();
+        private Optional<List<String>> start = Optional.empty();
+        private Optional<List<String>> end = Optional.empty();
+        
 
         public EditTaskDescriptor() {}
 
         public EditTaskDescriptor(EditTaskDescriptor toCopy) {
             this.description = toCopy.getDescription();
             this.tags = toCopy.getTags();
+            this.start = toCopy.getStart();
+            this.end = toCopy.getEnd();
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyPresent(this.description, this.tags);
+            return CollectionUtil.isAnyPresent(this.description, this.tags,this.start,this.end);
         }
 
         public void setDescription(Optional<Description> description) {
@@ -115,9 +132,27 @@ public class EditCommand extends Command {
             assert tags != null;
             this.tags = tags;
         }
+        
+        public void setStart(Optional<List<String>> start){
+        	assert start != null;
+        	this.start = start;
+        }
 
+        public void setEnd(Optional<List<String>> end){
+        	assert end != null;
+        	this.end = end;
+        }
+        
         public Optional<UniqueTagList> getTags() {
             return tags;
+        }
+        
+        public Optional<List<String>> getStart() {
+            return start;
+        }
+        
+        public Optional<List<String>> getEnd() {
+            return end;
         }
     }
 }
