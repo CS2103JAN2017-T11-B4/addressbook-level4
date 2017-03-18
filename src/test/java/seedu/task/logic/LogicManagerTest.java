@@ -385,7 +385,7 @@ public class LogicManagerTest {
             Tag tag1 = new Tag("tag1");
             Tag tag2 = new Tag("longertag2");
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
-            return new Task(name, null, null, tags, null);
+            return new Task(name, null, null, tags, new TaskId(System.currentTimeMillis()));
         }
 
         /**
@@ -401,7 +401,7 @@ public class LogicManagerTest {
                     null,
                     null,
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1))),
-                    null
+                    new TaskId(System.currentTimeMillis())
             );
         }
 
@@ -497,7 +497,7 @@ public class LogicManagerTest {
                     null,
                     null,
                     new UniqueTagList(new Tag("tag")),
-                    new TaskId(193874)
+                    new TaskId(System.currentTimeMillis())
             );
         }
     }
