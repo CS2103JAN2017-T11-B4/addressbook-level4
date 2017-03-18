@@ -48,7 +48,7 @@ public class TestTask implements ReadOnlyTask {
     }
 
     @Override
-    public TaskId getId() {
+    public TaskId getTaskId() {
         return this.id;
     }
 

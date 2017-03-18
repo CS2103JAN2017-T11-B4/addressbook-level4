@@ -13,6 +13,7 @@ import seedu.task.model.task.DueDate;
 import seedu.task.model.task.Duration;
 import seedu.task.model.task.ReadOnlyTask;
 import seedu.task.model.task.Task;
+import seedu.task.model.task.TaskId;
 import seedu.task.model.task.UniqueTaskList;
 
 /**
@@ -83,13 +84,14 @@ public class EditCommand extends Command {
         String updatedDurationStart = editTaskDescriptor.getDurationStart().orElseGet(taskToEdit::getDurationStart);
         String updatedDurationEnd = editTaskDescriptor.getDurationEnd().orElseGet(taskToEdit::getDurationEnd);
         Duration updatedDuration;
+        TaskId originalId = taskToEdit.getTaskId();
         try {
             updatedDuration = new Duration(updatedDurationStart, updatedDurationEnd);
         } catch (IllegalValueException e) {
             updatedDuration = taskToEdit.getDuration();
         }
 
-        return new Task(updatedDescription, updatedDueDate, updatedDuration, updatedTags);
+        return new Task(updatedDescription, updatedDueDate, updatedDuration, updatedTags, originalId);
     }
 
     /**
