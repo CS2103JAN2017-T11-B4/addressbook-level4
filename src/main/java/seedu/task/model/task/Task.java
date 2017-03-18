@@ -11,7 +11,7 @@ import seedu.task.model.tag.UniqueTagList;
  */
 public class Task implements ReadOnlyTask {
 
-    private static TaskId id;
+    private final TaskId id;
     private Description description;
     private DueDate dueDate;
     private Duration duration;
@@ -26,11 +26,12 @@ public class Task implements ReadOnlyTask {
      * @param tags must not be null
      */
     public Task(Description description, DueDate dueDate, Duration duration, UniqueTagList tags, TaskId id) {
-        assert !CollectionUtil.isAnyNull(description, tags);
+        assert !CollectionUtil.isAnyNull(description, tags, id);
         this.description = description;
         this.dueDate = dueDate;
         this.duration = duration;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+        this.id = id;
     }
 
     /**
