@@ -50,8 +50,20 @@ public class TaskMementosTest {
     }
 
     @Test
+    public void resetTest() {
+        TaskMementos mementos = TaskMementos.getInstance();
+        mementos.addUndoMementoAndClearRedo(memento1);
+        mementos.addUndoMementoAndClearRedo(memento2);
+        mementos.getUndoMemento();
+        mementos.reset();
+        assertEquals(Optional.empty(), mementos.getUndoMemento());
+        assertEquals(Optional.empty(), mementos.getRedoMemento());
+    }
+
+    @Test
     public void undoTest() {
-        TaskMementos mementos = new TaskMementos();
+        TaskMementos mementos = TaskMementos.getInstance();
+        mementos.reset();
         assertEquals(Optional.empty(), mementos.getUndoMemento());
         mementos.addUndoMementoAndClearRedo(memento1);
         assertEquals(Optional.of(memento1), mementos.getUndoMemento());
@@ -60,7 +72,8 @@ public class TaskMementosTest {
 
     @Test
     public void redoTest() {
-        TaskMementos mementos = new TaskMementos();
+        TaskMementos mementos = TaskMementos.getInstance();
+        mementos.reset();
         assertEquals(Optional.empty(), mementos.getRedoMemento());
         mementos.addUndoMementoAndClearRedo(memento1);
         assertEquals(Optional.empty(), mementos.getRedoMemento());
@@ -72,7 +85,8 @@ public class TaskMementosTest {
 
     @Test
     public void multipleUndoRedoTest() {
-        TaskMementos mementos = new TaskMementos();
+        TaskMementos mementos = TaskMementos.getInstance();
+        mementos.reset();
         assertEquals(Optional.empty(), mementos.getUndoMemento());
         assertEquals(Optional.empty(), mementos.getRedoMemento());
         mementos.addUndoMementoAndClearRedo(memento1);
