@@ -353,6 +353,27 @@ public class TestUtil {
         return removePersonsFromList(list, list[targetIndexInOneIndexedFormat - 1]);
     }
 
+
+    /**
+     * Returns a copy of the list with the task at specified index completed.
+     * @param list original list to copy from
+     * @param targetIndexInOneIndexedFormat e.g. index 1 if the first element is to be completed
+     */
+    public static TestTask[] completeTaskInList(final TestTask[] list, int targetIndexInOneIndexedFormat) {
+        list[targetIndexInOneIndexedFormat - 1].getComplete().setComplete();
+        return list;
+    }
+
+    /**
+     * Returns a copy of the list with the task at specified index uncompleted.
+     * @param list original list to copy from
+     * @param targetIndexInOneIndexedFormat e.g. index 1 if the first element is to be uncompleted
+     */
+    public static TestTask[] uncompleteTaskInList(final TestTask[] list, int targetIndexInOneIndexedFormat) {
+        list[targetIndexInOneIndexedFormat - 1].getComplete().setNotComplete();
+        return list;
+    }
+
     /**
      * Replaces persons[i] with a person.
      * @param persons The array of persons.
