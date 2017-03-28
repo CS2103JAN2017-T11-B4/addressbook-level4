@@ -57,6 +57,10 @@ public class TestTask implements ReadOnlyTask {
         this.dueDate = dueDate;
     }
 
+    public void setCompletion(Complete completion) {
+        this.complete = completion;
+    }
+
     @Override
     public TaskId getTaskId() {
         return this.id;
