@@ -8,12 +8,20 @@ import java.util.Stack;
  * Stores a history of tasks. Can be used to implement undo/redo histories.
  */
 public class TaskMementos {
+    private static TaskMementos taskMementos;
     private Stack<TaskMemento> undoMementoStack;
     private Stack<TaskMemento> redoMementoStack;
 
-    public TaskMementos() {
+    private TaskMementos() {
         this.undoMementoStack = new Stack<TaskMemento>();
         this.redoMementoStack = new Stack<TaskMemento>();
+    }
+
+    public static TaskMementos getInstance() {
+        if (taskMementos == null) {
+            TaskMementos.taskMementos = new TaskMementos();
+        }
+        return TaskMementos.taskMementos;
     }
 
     /**
@@ -51,5 +59,14 @@ public class TaskMementos {
         TaskMemento memento = redoMementoStack.pop();
         undoMementoStack.push(memento);
         return Optional.of(memento);
+    }
+
+    /**
+     * This is a potentially dangerous method that clears both the undo and redo stacks.
+     * It was created initially to enable testing of a singleton class.
+     */
+    public void reset() {
+        this.redoMementoStack.clear();
+        this.undoMementoStack.clear();
     }
 }
