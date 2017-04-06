@@ -51,7 +51,7 @@ Format: `help`
 ### 2.2. Adding a task : `add`
 
 Adds a task to the list<br>
-Format: `add TASK_DESCRIPTION [due/DATE_AND_TIME] [starts/DATE_AND_TIME ends/DATE_AND_TIME]`
+Format: `add TASK_DESCRIPTION [due/DATE_TIME] [starts/DATE_TIME ends/DATE_TIME]`
 
 Examples:
 
