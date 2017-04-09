@@ -1,5 +1,5 @@
 1. Set storage to the test directory, enter 
-"setstorage src/test/data/ManualTesting".
+"setstorage src/test/data/ManualTesting" and drag tasklist.xml from main/src/test/data/ManualTesting/testfile to main/src/test/data/ManualTesting, then open the App again.
 
 2. List the tasklist, enter
 "list".
